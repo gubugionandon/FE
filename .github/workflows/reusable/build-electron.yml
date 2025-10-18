@@ -1,0 +1,60 @@
+name: Build Electron App
+
+on:
+  workflow_call:
+    inputs:
+      platform:
+        description: 'Platform to build for'
+        required: true
+        type: string
+      build-command:
+        description: 'Build command to run'
+        required: true
+        type: string
+      artifact-name:
+        description: 'Artifact name'
+        required: true
+        type: string
+      artifact-path:
+        description: 'Artifact path pattern'
+        required: true
+        type: string
+    outputs:
+      artifact-name:
+        description: "Generated artifact name"
+        value: ${{ steps.build.outputs.artifact-name }}
+
+jobs:
+  build:
+    runs-on: ${{ inputs.platform == 'mac' && 'macos-latest' || inputs.platform == 'win' && 'windows-latest' || 'ubuntu-latest' }}
+    outputs:
+      artifact-name: ${{ steps.build.outputs.artifact-name }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          cd apps/electron
+          npm ci
+
+      - name: Build Electron app
+        id: build
+        run: |
+          cd apps/electron
+          npm run ${{ inputs.build-command }}
+          echo "artifact-name=${{ inputs.artifact-name }}" >> $GITHUB_OUTPUT
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.artifact-name }}
+          path: ${{ inputs.artifact-path }}
+          retention-days: 30
+

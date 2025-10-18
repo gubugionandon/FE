@@ -1,0 +1,34 @@
+name: Check Vercel Deployment
+
+on:
+  workflow_call:
+    outputs:
+      vercel-url:
+        description: "Vercel deployment URL"
+        value: ${{ steps.check-vercel.outputs.url }}
+      is-accessible:
+        description: "Whether Vercel deployment is accessible"
+        value: ${{ steps.check-vercel.outputs.accessible }}
+
+jobs:
+  check-vercel:
+    runs-on: ubuntu-latest
+    outputs:
+      url: ${{ steps.check-vercel.outputs.url }}
+      accessible: ${{ steps.check-vercel.outputs.accessible }}
+    steps:
+      - name: Check Vercel Deployment
+        id: check-vercel
+        run: |
+          echo "Checking Vercel deployment at https://new-web-eight-green.vercel.app/"
+          response=$(curl -s -o /dev/null -w "%{http_code}" https://new-web-eight-green.vercel.app/)
+          if [ $response -eq 200 ]; then
+            echo "✅ Vercel deployment is accessible"
+            echo "url=https://new-web-eight-green.vercel.app/" >> $GITHUB_OUTPUT
+            echo "accessible=true" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Vercel deployment is not accessible (HTTP $response)"
+            echo "accessible=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+

@@ -1,0 +1,10 @@
+@import 'tailwindcss';
+@import './theme.css';
+
+/* UI 패키지 전용 스타일 */
+@layer base {
+  /* 기본 스타일 리셋 */
+  * {
+    box-sizing: border-box;
+  }
+}

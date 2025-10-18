@@ -1,0 +1,49 @@
+name: Create Release
+
+on:
+  workflow_call:
+    inputs:
+      vercel-url:
+        description: 'Vercel deployment URL'
+        required: true
+        type: string
+    secrets:
+      GITHUB_TOKEN:
+        required: true
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ./artifacts
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ github.run_number }}
+          name: Electron App Release v${{ github.run_number }}
+          body: |
+            ## 🚀 Electron App Release
+            
+            ### 📱 Platforms
+            - **macOS**: Intel & Apple Silicon
+            - **Windows**: x64 & x86
+            - **Linux**: x64 AppImage
+            
+            ### 🔗 Connected to
+            - Vercel App: ${{ inputs.vercel-url }}
+            
+            ### 📦 Downloads
+            Check the artifacts section below for platform-specific builds.
+          files: |
+            artifacts/mac-electron-app/*
+            artifacts/windows-electron-app/*
+            artifacts/linux-electron-app/*
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

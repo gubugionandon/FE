@@ -1,0 +1,66 @@
+name: Comment PR
+
+on:
+  workflow_call:
+    inputs:
+      vercel-url:
+        description: 'Vercel deployment URL'
+        required: true
+        type: string
+
+jobs:
+  comment-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ./artifacts
+
+      - name: Comment PR with build artifacts
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            
+            // Get artifact files
+            const macFiles = fs.existsSync('./artifacts/mac-electron-app') 
+              ? fs.readdirSync('./artifacts/mac-electron-app').filter(f => f.endsWith('.dmg'))
+              : [];
+            const winFiles = fs.existsSync('./artifacts/windows-electron-app')
+              ? fs.readdirSync('./artifacts/windows-electron-app').filter(f => f.endsWith('.exe'))
+              : [];
+            const linuxFiles = fs.existsSync('./artifacts/linux-electron-app')
+              ? fs.readdirSync('./artifacts/linux-electron-app').filter(f => f.endsWith('.AppImage'))
+              : [];
+            
+            const comment = `## 🎉 Electron App Build Complete!
+            
+            ### ✅ Vercel Deployment Check
+            - **Status**: ✅ Accessible at ${{ inputs.vercel-url }}
+            
+            ### 📦 Build Artifacts
+            
+            #### macOS
+            ${macFiles.length > 0 ? macFiles.map(f => `- \`${f}\``).join('\n') : '- No macOS artifacts found'}
+            
+            #### Windows  
+            ${winFiles.length > 0 ? winFiles.map(f => `- \`${f}\``).join('\n') : '- No Windows artifacts found'}
+            
+            #### Linux
+            ${linuxFiles.length > 0 ? linuxFiles.map(f => `- \`${f}\``).join('\n') : '- No Linux artifacts found'}
+            
+            ### 📥 Download
+            Check the "Artifacts" section in the Actions tab to download the builds.
+            
+            ### 🔗 Connected Web App
+            The Electron app is connected to: ${{ inputs.vercel-url }}`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
