@@ -36,7 +36,9 @@ jobs:
           cache-dependency-path: package-lock.json
 
       - name: Install deps (disable husky only)
-        run: HUSKY=0 npm ci --workspaces
+        run: npm ci --workspaces
+        env:
+          HUSKY: 0
 
       - name: Build web (renderer)
         run: |
