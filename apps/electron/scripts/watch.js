@@ -113,17 +113,12 @@ const setupPreloadPackageWatcher = ({ ws }) =>
   });
 
 /**
- * Start renderer dev server
+ * Start web app dev server (external)
  */
-const setupRendererPackageWatcher = () =>
-  getWatcher({
-    name: 'renderer-dev-server',
-    configFile: 'layers/renderer/vite.config.ts',
-    writeBundle() {
-      // Renderer changes are handled by Vite dev server
-      console.log('Renderer package built');
-    },
-  });
+const setupWebAppWatcher = () => {
+  console.log('Web app should be running on http://localhost:5173');
+  console.log('Start web app with: cd ../../apps/web && npm run dev');
+};
 
 (async () => {
   try {
@@ -135,7 +130,7 @@ const setupRendererPackageWatcher = () =>
 
     await setupPreloadPackageWatcher(viteDevServer);
     await setupMainPackageWatcher(viteDevServer);
-    await setupRendererPackageWatcher();
+    setupWebAppWatcher();
   } catch (e) {
     console.error(e);
     process.exit(1);

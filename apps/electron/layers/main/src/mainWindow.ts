@@ -29,12 +29,12 @@ async function createWindow() {
 
   /**
    * URL for main window.
-   * Vite dev server for development.
-   * Local file for production
+   * Web app dev server for development.
+   * Web app build for production
    */
   const pageUrl = import.meta.env.DEV
-    ? 'http://localhost:3001' // Electron renderer dev server
-    : `file://${join(__dirname, '../../renderer/dist/index.html')}`;
+    ? 'http://localhost:3000' // Web app dev server
+    : `file://${join(__dirname, '../../../web/dist/index.html')}`;
 
   // Set Content Security Policy for renderer
   browserWindow.webContents.session.webRequest.onHeadersReceived(
