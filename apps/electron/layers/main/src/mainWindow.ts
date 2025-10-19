@@ -30,11 +30,11 @@ async function createWindow() {
   /**
    * URL for main window.
    * Web app dev server for development.
-   * Web app build for production
+   * Production web app from bugi.co.kr
    */
   const pageUrl = import.meta.env.DEV
     ? 'http://localhost:3000' // Web app dev server
-    : `file://${join(__dirname, '../../../web/dist/index.html')}`;
+    : 'https://www.bugi.co.kr/'; // Production web app
 
   // Set Content Security Policy for renderer
   browserWindow.webContents.session.webRequest.onHeadersReceived(
@@ -43,12 +43,12 @@ async function createWindow() {
         responseHeaders: {
           ...details.responseHeaders,
           'Content-Security-Policy': [
-            "default-src 'self' 'unsafe-inline' data:;",
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval';",
-            "style-src 'self' 'unsafe-inline';",
-            "img-src 'self' data:;",
-            "connect-src 'self';",
-            "font-src 'self' data:;",
+            "default-src 'self' 'unsafe-inline' data: https://www.bugi.co.kr;",
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.bugi.co.kr;",
+            "style-src 'self' 'unsafe-inline' https://www.bugi.co.kr;",
+            "img-src 'self' data: https://www.bugi.co.kr;",
+            "connect-src 'self' https://www.bugi.co.kr;",
+            "font-src 'self' data: https://www.bugi.co.kr;",
             "object-src 'none';",
           ],
         },
