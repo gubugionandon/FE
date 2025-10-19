@@ -9,7 +9,6 @@ on:
       - 'apps/web/**'
       - '.github/workflows/electron-build-pr.yml'
 
-# 최소 권한 (PR 코멘트만 허용)
 permissions:
   contents: read
   pull-requests: write
@@ -19,7 +18,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-latest, windows-latest]
+        include:
+          - os: macos-latest
+            os_short: mac
+          - os: windows-latest
+            os_short: win
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -35,31 +38,23 @@ jobs:
           cache: 'npm'
           cache-dependency-path: package-lock.json
 
-      - name: Install deps (disable husky only)
-        run: npm ci --workspaces --ignore-scripts
-        env:
-          HUSKY: 0
+      - name: Cache turbo
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: turbo-${{ github.job }}-${{ github.ref_name }}-${{ github.sha }}
+          restore-keys: |
+            turbo-${{ github.job }}-${{ github.ref_name }}-
 
-      - name: Build web (renderer)
-        run: |
-          cd apps/web
-          npm run build
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
 
-      - name: Build Electron (main+preload)
-        run: |
-          cd apps/electron
-          npm run build
+      - name: Build all dependencies for Electron
+        run: npm run build --filter=electron...
 
-      - name: Package Electron
-        run: |
-          cd apps/electron
-          if [ "${{ matrix.os }}" = "macos-latest" ]; then
-            npm run build:mac   # electron-builder --mac ...
-          else
-            npm run build:win   # electron-builder --win ...
-          fi
+      - name: Package Electron App
+        run: npm run build:${{ matrix.os_short }} --workspace=electron-wrapper
 
-      # OS별 결과 업로드 (파일 없는 패턴은 무시)
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -71,21 +66,20 @@ jobs:
             apps/electron/dist/*.exe
             apps/electron/dist/mac/**
 
-      # 간단 코멘트 (OS별 1개씩)
-      - name: Comment PR
+      - name: Comment on PR
         if: always()
         uses: actions/github-script@v7
         with:
           script: |
             const os = '${{ matrix.os }}';
-            const run = 'https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}';
-            const body = [
-              '## 🔧 Electron Build',
-              `- OS: **${os}**`,
-              `- Artifacts: [보기](${run})`,
-              '',
-              '_자동 코멘트_'
-            ].join('\n');
+            const run = `https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}`;
+            const body = `
+              ## 🔧 Electron Build (${os})
+              - **Status**: ${{ job.status }}
+              - **Artifacts**: [View Build Artifacts](${run})
+              ---
+              *This is an automated comment.*
+            `;
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
