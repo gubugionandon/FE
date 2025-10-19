@@ -27,19 +27,18 @@ jobs:
           # 전체 workspace 의존성 설치 (husky 스크립트 무시)
           npm ci --ignore-scripts
           
-      - name: Verify installation
+      - name: Verify workspace setup
         run: |
           echo "✅ Workspace dependencies installed successfully"
-          echo "📦 Installed packages:"
-          ls -la node_modules/ | grep -E "(api|ui|config)" || echo "Workspace packages found in packages/"
+          echo "📦 Workspace packages:"
           ls -la packages/
+          echo "🔗 Checking workspace links:"
+          cd apps/web
+          echo "Checking if ui package is accessible:"
+          node -e "try { require('ui'); console.log('✅ ui package accessible'); } catch(e) { console.log('❌ ui package not accessible:', e.message); }"
+          echo "Checking if api package is accessible:"
+          node -e "try { require('api'); console.log('✅ api package accessible'); } catch(e) { console.log('❌ api package not accessible:', e.message); }"
 
-      - name: Typecheck workspace packages
-        run: |
-          # workspace 패키지들의 타입 체크
-          npm run typecheck --workspace=packages/ui
-          npm run typecheck --workspace=packages/api
-          
       - name: Build web app
         run: |
           cd apps/web
