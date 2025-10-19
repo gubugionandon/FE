@@ -1,0 +1,166 @@
+name: Electron Build for PR
+
+on:
+  pull_request:
+    branches: ['main']
+    paths:
+      - 'apps/electron/**'
+      - 'packages/**'
+      - 'apps/web/**'
+
+jobs:
+  build-electron:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: |
+            package-lock.json
+
+      - name: Install workspace dependencies
+        run: |
+          # 전체 workspace 의존성 설치 (husky 스크립트 무시)
+          npm ci --ignore-scripts
+
+      - name: Build web app (Electron renderer)
+        run: |
+          cd apps/web
+          npm run build
+          echo "✅ Web app built successfully"
+
+      - name: Build Electron app
+        run: |
+          cd apps/electron
+          npm run build
+          echo "✅ Electron main and preload built successfully"
+
+      - name: Compile Electron (macOS)
+        run: |
+          cd apps/electron
+          npm run build:mac
+          echo "✅ Electron macOS app compiled successfully"
+
+      - name: Compile Electron (Windows)
+        run: |
+          cd apps/electron
+          npm run build:win
+          echo "✅ Electron Windows app compiled successfully"
+
+      - name: Upload macOS build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: electron-macos-${{ github.event.number }}
+          path: apps/electron/dist/*.dmg
+          retention-days: 30
+
+      - name: Upload Windows build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: electron-windows-${{ github.event.number }}
+          path: apps/electron/dist/*.exe
+          retention-days: 30
+
+      - name: Upload macOS app directory
+        uses: actions/upload-artifact@v4
+        with:
+          name: electron-macos-app-${{ github.event.number }}
+          path: apps/electron/dist/mac/
+          retention-days: 30
+
+      - name: Get build info
+        id: build-info
+        run: |
+          cd apps/electron
+          MACOS_SIZE=$(du -sh dist/*.dmg 2>/dev/null | cut -f1 || echo "N/A")
+          WINDOWS_SIZE=$(du -sh dist/*.exe 2>/dev/null | cut -f1 || echo "N/A")
+          
+          echo "macos_size=$MACOS_SIZE" >> $GITHUB_OUTPUT
+          echo "windows_size=$WINDOWS_SIZE" >> $GITHUB_OUTPUT
+          
+          # 빌드된 파일 목록
+          echo "macos_files=$(ls -la dist/*.dmg 2>/dev/null | wc -l)" >> $GITHUB_OUTPUT
+          echo "windows_files=$(ls -la dist/*.exe 2>/dev/null | wc -l)" >> $GITHUB_OUTPUT
+
+      - name: Comment PR with build results
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            
+            // 기존 댓글 삭제
+            const botComment = comments.find(comment => 
+              comment.user.type === 'Bot' && comment.body.includes('🔧 Electron Build Results')
+            );
+            
+            if (botComment) {
+              await github.rest.issues.deleteComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+              });
+            }
+            
+            // 새로운 댓글 작성
+            const comment = `## 🔧 Electron Build Results
+            
+            ### ✅ 빌드 완료!
+            
+            **PR #${{ github.event.number }}** 에 대한 Electron 앱 빌드가 성공적으로 완료되었습니다.
+            
+            ### 📦 빌드 결과
+            
+            | 플랫폼 | 상태 | 파일 크기 | 다운로드 |
+            |--------|------|-----------|----------|
+            | 🍎 macOS | ✅ 성공 | ${{ steps.build-info.outputs.macos_size }} | [다운로드](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) |
+            | 🪟 Windows | ✅ 성공 | ${{ steps.build-info.outputs.windows_size }} | [다운로드](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) |
+            
+            ### 📋 빌드 정보
+            
+            - **커밋**: \`${{ github.sha }}\`
+            - **브랜치**: \`${{ github.head_ref }}\`
+            - **빌드 시간**: \`${{ steps.build-info.outputs.build_time }}\`
+            - **Node.js**: \`20.x\`
+            - **Electron**: \`32.0.0\`
+            
+            ### 🚀 다운로드 방법
+            
+            1. 위의 "다운로드" 링크를 클릭
+            2. "Artifacts" 섹션에서 원하는 플랫폼 선택
+            3. 파일을 다운로드하여 테스트
+            
+            ### 📝 테스트 체크리스트
+            
+            - [ ] Flutter 앱이 정상적으로 로드되는지 확인
+            - [ ] 메뉴바 기능이 정상 작동하는지 확인
+            - [ ] 윈도우 크기 조절이 정상 작동하는지 확인
+            - [ ] 개발자 도구가 정상 작동하는지 확인
+            
+            ---
+            *이 댓글은 GitHub Actions에 의해 자동 생성되었습니다.*`;
+            
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: comment,
+            });
+
+      - name: Build summary
+        run: |
+          echo "✅ Electron build completed successfully!"
+          echo "📦 macOS build: ${{ steps.build-info.outputs.macos_size }}"
+          echo "📦 Windows build: ${{ steps.build-info.outputs.windows_size }}"
+          echo "🔗 PR Comment: Added build results to PR #${{ github.event.number }}"
