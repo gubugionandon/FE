@@ -1,10 +1,11 @@
 name: Deploy Storybook to GitHub Pages
 
+# 이 워크플로우는 build-all-pr.yml로 대체되었습니다
+# main 브랜치에서만 실행하도록 제한
 on:
   push:
     branches: ['main']
-  pull_request:
-    branches: ['main']
+  # pull_request는 build-all-pr.yml에서 처리
 
 # GitHub Pages 배포를 위한 권한 설정
 permissions:
