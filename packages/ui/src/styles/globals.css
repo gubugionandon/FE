@@ -1,5 +1,14 @@
+@font-face {
+  font-family: 'Pretendard';
+  src: url('../../../../assets/fonts/PretendardVariable.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
 @import 'tailwindcss';
 @import './theme.css';
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 /* UI 패키지 전용 스타일 */
 @layer base {
@@ -7,4 +16,211 @@
   * {
     box-sizing: border-box;
   }
+  
+  /* 프리텐다드 폰트 적용 */
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  }
+  
+  /* 기본 폰트 패밀리를 Pretendard로 설정 */
+  html {
+    font-family: 'Pretendard', system-ui, sans-serif;
+  }
+}
+
+:root {
+  /* 기존 CSS 변수 */
+  --color-ring: hsl(221.2 83.2% 53.3%);
+  --color-primary: hsl(221.2 83.2% 53.3%);
+  --color-primary-foreground: hsl(210 40% 98%);
+  --color-secondary: hsl(210 40% 96%);
+  --color-secondary-foreground: hsl(222.2 84% 4.9%);
+  --color-accent: hsl(210 40% 96%);
+  --color-accent-foreground: hsl(222.2 84% 4.9%);
+  --color-input: hsl(214.3 31.8% 91.4%);
+  --color-background: hsl(0 0% 100%);
+  
+  /* Yellow 컬러 팔레트 */
+  --color-yellow-50: #FFF9E6;
+  --color-yellow-100: #FFEBB0;
+  --color-yellow-200: #FFE28A;
+  --color-yellow-300: #FFD454;
+  --color-yellow-400: #FFCC33;
+  --color-yellow-500: #FFBF00;
+  --color-yellow-600: #E8AE00;
+  --color-yellow-700: #D29A00;
+  --color-yellow-800: #BD8700;
+  --color-yellow-900: #A67100;
+
+  --color-grey-0: #131312;
+  --color-grey-50: #191918;
+  --color-grey-100: #2C2C2C;
+  --color-grey-200: #3C3B3A;
+  --color-grey-300: #6A6966;
+  --color-grey-400: #7E7E7B;
+  --color-grey-500: #A8A7A4;
+  --color-grey-600: #C6C5C3;
+  --color-grey-700: #E3E1DF;
+  --color-grey-800: #EFEEED;
+  --color-grey-900: #F9F8F7;
+  --color-grey-950: #FCFCFC;
+  --color-grey-1000: #FFFFFF;
+}
+
+@theme inline {
+  /* Light mode colors */
+  --color-yellow-50: var(--color-yellow-50);
+  --color-yellow-100: var(--color-yellow-100);
+  --color-yellow-200: var(--color-yellow-200);
+  --color-yellow-300: var(--color-yellow-300);
+  --color-yellow-400: var(--color-yellow-400);
+  --color-yellow-500: var(--color-yellow-500);
+  --color-yellow-600: var(--color-yellow-600);
+  --color-yellow-700: var(--color-yellow-700);
+  --color-yellow-800: var(--color-yellow-800);
+  --color-yellow-900: var(--color-yellow-900);
+
+  --color-grey-0: var(--color-grey-0);
+  --color-grey-50: var(--color-grey-50);
+  --color-grey-100: var(--color-grey-100);
+  --color-grey-200: var(--color-grey-200);
+  --color-grey-300: var(--color-grey-300);
+  --color-grey-400: var(--color-grey-400);
+  --color-grey-500: var(--color-grey-500);
+  --color-grey-600: var(--color-grey-600);
+  --color-grey-700: var(--color-grey-700);
+  --color-grey-800: var(--color-grey-800);
+  --color-grey-900: var(--color-grey-900);
+  --color-grey-950: var(--color-grey-950);
+  --color-grey-1000: var(--color-grey-1000);
+}
+
+/* Dark mode colors */
+.dark {
+  /* Dark mode Yellow (더 어두운 톤) */
+  --color-yellow-50: #624D0B;
+  --color-yellow-100: #806310;
+  --color-yellow-200: #9D7B13;
+  --color-yellow-300: #C59A18;
+  --color-yellow-400: #E0AE1C;
+  --color-yellow-500: #E7BD3E;
+  --color-yellow-600: #E9C34F;
+  --color-yellow-700: #EDCD73;
+  --color-yellow-800: #F2DA9B;
+  --color-yellow-900: #F7E5C0;
+
+  /* Dark mode Grey (역전된 스케일) */
+  --color-grey-0: #131312;
+  --color-grey-50: #191918;
+  --color-grey-100: #2C2C2C;
+  --color-grey-200: #3C3B3A;
+  --color-grey-300: #6A6966;
+  --color-grey-400: #7E7E7B;
+  --color-grey-500: #A8A7A4;
+  --color-grey-600: #C6C5C3;
+  --color-grey-700: #E3E1DF;
+  --color-grey-800: #EFEEED;
+  --color-grey-900: #F9F8F7;
+  --color-grey-950: #FCFCFC;
+  --color-grey-1000: #FFFFFF;
+}
+
+@utility text-title-4xl-bold {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+@utility text-title-4xl-semibold {
+  font-size: 32px;
+  font-weight: 600;
+}
+
+@utility text-headline-3xl-regular {
+  font-size: 24px;
+  font-weight: 400;
+}
+
+@utility text-headline-3xl-medium {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+@utility text-headline-3xl-semibold {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+@utility text-headline-2xl-regular {
+  font-size: 22px;
+  font-weight: 400;
+}
+
+@utility text-headline-2xl-medium {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+@utility text-headline-2xl-semibold {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+@utility text-body-xl-regular {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+@utility text-body-xl-medium {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+@utility text-body-xl-semibold {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+@utility text-body-lg-regular {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+@utility text-body-lg-medium {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+@utility text-body-lg-semibold {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+@utility text-body-md-regular {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+@utility text-body-md-medium {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+@utility text-body-md-semibold {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+@utility text-caption-sm-regular {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+@utility text-caption-sm-medium {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+@utility text-caption-sm-semibold {
+  font-size: 14px;
+  font-weight: 600;
 }
