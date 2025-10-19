@@ -58,11 +58,6 @@ jobs:
             "installCommand": "",
             "framework": null,
             "regions": ["icn1"],
-            "functions": {
-              "**/*.js": {
-                "maxDuration": 30
-              }
-            },
             "headers": [
               {
                 "source": "/(.*)",
@@ -135,3 +130,8 @@ jobs:
           echo "📁 Source directory: output"
           echo "🎯 Target repository: choihooo/gubugionandon-FE"
           echo "📝 Commit message: ${{ github.event.commits[0].message }}"
+          echo ""
+          echo "🚨 IMPORTANT: Vercel 설정 확인 필요!"
+          echo "   - Root Directory를 비워두거나 '.'로 설정하세요"
+          echo "   - Build Command, Output Directory를 비워두세요"
+          echo "   - vercel.json 파일이 자동으로 생성되었습니다"
