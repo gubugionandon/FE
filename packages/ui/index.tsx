@@ -5,6 +5,5 @@ export * from './src/components/AnimatedBox/AnimatedBox';
 export * from './src/components/Button/Button';
 export * from './src/components/Header/Header';
 export * from './src/components/Page/Page';
-export * from './src/components/ThemeToggle/ThemeToggle';
 export * from './src/components/Typography/Typography';
 
