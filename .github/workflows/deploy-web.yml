@@ -48,6 +48,63 @@ jobs:
         run: |
           mkdir -p output
           cp -r apps/web/dist/* output/
+          
+          # Vercel 설정 파일 생성
+          cat > output/vercel.json << 'EOF'
+          {
+            "buildCommand": "",
+            "outputDirectory": ".",
+            "devCommand": "",
+            "installCommand": "",
+            "framework": null,
+            "regions": ["icn1"],
+            "functions": {
+              "**/*.js": {
+                "maxDuration": 30
+              }
+            },
+            "headers": [
+              {
+                "source": "/(.*)",
+                "headers": [
+                  {
+                    "key": "X-Content-Type-Options",
+                    "value": "nosniff"
+                  },
+                  {
+                    "key": "X-Frame-Options",
+                    "value": "DENY"
+                  },
+                  {
+                    "key": "X-XSS-Protection",
+                    "value": "1; mode=block"
+                  }
+                ]
+              },
+              {
+                "source": "/assets/(.*)",
+                "headers": [
+                  {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=31536000, immutable"
+                  }
+                ]
+              }
+            ],
+            "redirects": [
+              {
+                "source": "/",
+                "destination": "/index.html"
+              }
+            ],
+            "rewrites": [
+              {
+                "source": "/(.*)",
+                "destination": "/index.html"
+              }
+            ]
+          }
+          EOF
 
       - name: Add build info
         run: |
