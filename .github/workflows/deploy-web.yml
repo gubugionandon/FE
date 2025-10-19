@@ -25,7 +25,14 @@ jobs:
       - name: Install dependencies
         run: |
           cd apps/web
-          npm ci
+          # husky 설치 스크립트를 무시하고 의존성만 설치
+          npm ci --ignore-scripts
+          
+      - name: Verify installation
+        run: |
+          cd apps/web
+          echo "✅ Dependencies installed successfully"
+          ls -la node_modules/ | head -10
 
       - name: Build web app
         run: |
@@ -55,7 +62,7 @@ jobs:
         with:
           source-directory: 'output'
           destination-github-username: choihooo
-          destination-repository-name: zighang-zighang-frontend
+          destination-repository-name: gubugionandon-FE
           user-email: ${{ secrets.EMAIL }}
           commit-message: "🚀 Deploy web app: ${{ github.event.commits[0].message }}"
           target-branch: main
@@ -64,5 +71,5 @@ jobs:
         run: |
           echo "✅ Web app deployed successfully!"
           echo "📁 Source directory: output"
-          echo "🎯 Target repository: choihooo/zighang-zighang-frontend"
+          echo "🎯 Target repository: choihooo/gubugionandon-FE"
           echo "📝 Commit message: ${{ github.event.commits[0].message }}"
