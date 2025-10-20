@@ -19,7 +19,7 @@ const config = {
   files: [
     'layers/main/dist/**',
     'layers/preload/dist/**',
-    'layers/renderer/dist/**',
+    '../../apps/web/dist/**',
     'node_modules/**/*',
     'package.json',
   ],
@@ -31,7 +31,7 @@ const config = {
     const requiredFiles = [
       'layers/main/dist/index.cjs',
       'layers/preload/dist/index.cjs',
-      'layers/renderer/dist/index.html',
+      '../../apps/web/dist/index.html',
     ];
 
     for (const file of requiredFiles) {
