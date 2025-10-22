@@ -28,4 +28,6 @@ body {
     'Droid Sans',
     'Helvetica Neue',
     sans-serif;
+
+  @apply bg-[#F9F8F7];
 }

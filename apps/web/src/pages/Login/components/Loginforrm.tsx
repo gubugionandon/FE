@@ -4,6 +4,7 @@ import SaveIdIcon from '@assets/auth/saveid_icon.svg?react';
 import VisibleIcon from '@assets/auth/visible_icon.svg?react';
 import InvisibleIcon from '@assets/auth/invisible_icon.svg?react';
 import LoginButton from './LoginButton';
+import { useNavigate } from 'react-router-dom';
 
 interface LoginFormData {
   email: string;
@@ -32,6 +33,8 @@ const LoginForm = () => {
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
+
+  const navigate = useNavigate();
 
   return (
     <>
@@ -97,7 +100,12 @@ const LoginForm = () => {
       </form>
       {/* 회원가입 / 비밀번호 찾기 */}
       <div className="text-grey-300 text-caption-sm-regular hbp:text-body-lg-regular hbp:mt-[-20px] hbp:gap-[25px] mt-[-16px] flex flex-row gap-5">
-        <span className="hover:text-grey-200 cursor-pointer">회원가입</span>
+        <span
+          onClick={() => navigate('/auth/signup')}
+          className="hover:text-grey-200 cursor-pointer"
+        >
+          회원가입
+        </span>
         <span>|</span>
         <span className="hover:text-grey-200 cursor-pointer">
           비밀번호 찾기
