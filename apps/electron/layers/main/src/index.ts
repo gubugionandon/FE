@@ -116,13 +116,23 @@ app
     if (import.meta.env.DEV) {
       try {
         // 동적 import로 devtools 설치 (프로덕션에서 오류 방지)
-        import('electron-devtools-installer').then(({ default: installExtension, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS }) => {
-          installExtension([REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS])
-            .then((name) => console.log(`Added Extensions:  ${name}`))
-            .catch((err) => console.log('An error occurred installing extensions: ', err));
-        }).catch((error) => {
-          console.log('DevTools installation skipped:', error);
-        });
+        import('electron-devtools-installer')
+          .then(
+            ({
+              default: installExtension,
+              REACT_DEVELOPER_TOOLS,
+              REDUX_DEVTOOLS,
+            }) => {
+              installExtension([REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS])
+                .then((name) => console.log(`Added Extensions:  ${name}`))
+                .catch((err) =>
+                  console.log('An error occurred installing extensions: ', err),
+                );
+            },
+          )
+          .catch((error) => {
+            console.log('DevTools installation skipped:', error);
+          });
       } catch (error) {
         console.log('DevTools installation skipped:', error);
       }

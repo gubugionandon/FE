@@ -58,8 +58,9 @@ module.exports = {
         },
       },
       fontFamily: {
-        'pretendard': ['Pretendard', 'system-ui', 'sans-serif'],
+        pretendard: ['Pretendard', 'system-ui', 'sans-serif'],
       },
+      spacing: {},
     },
   },
   plugins: [],

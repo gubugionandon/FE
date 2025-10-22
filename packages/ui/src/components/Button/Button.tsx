@@ -4,24 +4,24 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-white',
+  'inline-flex items-center justify-center rounded-full transition-colors focus-visible:outline-none disabled:cursor-not-allowed',
   {
     variants: {
       variant: {
-        primary: 'bg-blue-600 text-white hover:bg-blue-700',
-        secondary: 'bg-gray-100 text-gray-900 hover:bg-gray-200',
-        outline: 'border border-gray-300 hover:bg-gray-50 hover:text-gray-900',
-        ghost: 'hover:bg-gray-100 hover:text-gray-900',
+        primary:
+          'bg-yellow-400 text-grey-1000 hover:bg-yellow-500 active:bg-yellow-600 disabled:bg-grey-200 disabled:text-grey-0 ',
       },
       size: {
-        small: 'h-9 px-3 rounded-md',
-        medium: 'h-10 py-2 px-4',
-        large: 'h-11 px-8 rounded-md',
+        xs: 'h-[33px] px-3 text-caption-sm-medium',
+        sm: 'h-10 px-4 text-body-md-medium',
+        md: 'h-10 px-5 text-body-md-medium',
+        lg: 'h-[51px] px-6 text-body-lg-medium',
+        xl: 'h-[59px] px-7 text-body-lg-medium ',
       },
     },
     defaultVariants: {
       variant: 'primary',
-      size: 'medium',
+      size: 'md',
     },
   },
 );
