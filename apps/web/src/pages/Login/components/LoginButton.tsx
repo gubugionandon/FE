@@ -10,7 +10,7 @@ interface LoginButtonProps {
 export default function LoginButton({
   type = 'button',
   onClick,
-  disabled = false,
+  disabled = true,
   className = '',
 }: LoginButtonProps) {
   return (
@@ -19,8 +19,8 @@ export default function LoginButton({
       onClick={onClick}
       disabled={disabled}
       variant="primary"
-      size="lg"
-      className={`mt-[20px] w-full ${className}`}
+      size="xl"
+      className={`hbp:mt-7 mt-5 w-full ${className} hbp:h-[74px] text-headline-2xl-medium`}
     >
       로그인
     </Button>
