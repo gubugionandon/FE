@@ -1,6 +1,3 @@
-import React, { useState } from 'react';
-import { Button } from 'ui/Button';
-import TextField from 'ui/TextField';
 import SignUpForm from './components/SignUpform';
 
 const SignUpPage = () => {

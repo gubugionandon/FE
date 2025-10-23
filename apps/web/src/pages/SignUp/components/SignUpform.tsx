@@ -3,6 +3,7 @@ import { Button } from 'ui/Button';
 import TextField from 'ui/TextField';
 import { validateName, validatePasswordMatch } from '../utils/validation';
 import FormInput from './FormInput';
+import PasswordField from '../../Login/components/PasswordField';
 
 interface SignUpFormData {
   email: string;
@@ -98,15 +99,10 @@ const SignUpForm = () => {
         <p className="hbp:mb-[7.5px] text-caption-sm-medium hbp:text-body-md-medium text-grey-300 mb-[6px]">
           영문, 숫자, 특수문자를 조합하여 8-16글자로 입력해주세요.
         </p>
-        <TextField
-          id="password"
-          type="password"
-          placeholder="비밀번호를 입력해주세요."
+        <PasswordField
+          className="focus:border-yellow-500"
           value={formData.password}
           onChange={handleInputChange('password')}
-          className={
-            'hbp: hbp:text-body-xl-regular mb-[8px] mb-[9px] outline-none focus:border-yellow-500'
-          }
         />
 
         {/*비밀번호 재입력 섹션 */}

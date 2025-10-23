@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import TextInput from '@ui/InputField/TextField';
 import SaveIdIcon from '@assets/auth/saveid_icon.svg?react';
-import VisibleIcon from '@assets/auth/visible_icon.svg?react';
-import InvisibleIcon from '@assets/auth/invisible_icon.svg?react';
 import LoginButton from './LoginButton';
 import { useNavigate } from 'react-router-dom';
+import PasswordField from './PasswordField';
 
 interface LoginFormData {
   email: string;
@@ -19,19 +18,11 @@ const LoginForm = () => {
     saveId: false,
   });
 
-  /* 비밀번호 보이기/숨기기 */
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
-
   const handleInputChange = (
     field: keyof LoginFormData,
     value: string | boolean,
   ) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
-  };
-
-  const togglePasswordVisibility = () => {
-    setIsPasswordVisible(!isPasswordVisible);
   };
 
   const navigate = useNavigate();
@@ -50,33 +41,11 @@ const LoginForm = () => {
           />
         </div>
         {/* 비밀번호 부분 */}
-        <div className="relative w-full">
-          <TextInput
-            type={isPasswordVisible ? 'text' : 'password'}
-            placeholder="비밀번호"
-            value={formData.password}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              handleInputChange('password', e.target.value)
-            }
-            onFocus={() => setIsPasswordFocused(true)}
-            onBlur={() => setIsPasswordFocused(false)}
-            className="hbp:text-body-lg-regular aspect-[44/6] outline-none focus:border-yellow-500"
-          />
-          {isPasswordFocused && (
-            <button
-              type="button"
-              onMouseDown={(e) => e.preventDefault()}
-              onClick={togglePasswordVisibility}
-              className="absolute top-1/2 right-6 -translate-y-1/2 p-1 hover:bg-gray-100"
-            >
-              {isPasswordVisible ? (
-                <InvisibleIcon className="hbp:h-6 h-5 w-5 w-6" />
-              ) : (
-                <VisibleIcon className="hbp:h-6 h-5 w-5 w-6" />
-              )}
-            </button>
-          )}
-        </div>
+        <PasswordField
+          className="focus:border-yellow-500"
+          value={formData.password}
+          onChange={(e) => handleInputChange('password', e.target.value)}
+        />
         {/* id 저장 부분 */}
         <div className="text-caption-sm-regular hbp:text-body-lg-regular text-grey-400 mt-1 flex w-full justify-start gap-3">
           <label className="hbp:gap-2.5 flex cursor-pointer items-center gap-2">
