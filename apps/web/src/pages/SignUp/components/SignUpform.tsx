@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
 import { Button } from 'ui/Button';
 import TextField from 'ui/TextField';
-import SuccessIcon from '@assets/auth/success_icon.svg?react';
-import FailIcon from '@assets/auth/error_icon.svg?react';
+import { validateName, validatePasswordMatch } from '../utils/validation';
+import FormInput from './FormInput';
 
 interface SignUpFormData {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  name: string;
+}
+
+interface FormErrors {
   email: string;
   password: string;
   confirmPassword: string;
@@ -19,7 +26,7 @@ const SignUpForm = () => {
     name: '',
   });
 
-  const [errors, setErrors] = useState({
+  const [errors, setErrors] = useState<FormErrors>({
     email: '',
     password: '',
     confirmPassword: '',
@@ -28,52 +35,31 @@ const SignUpForm = () => {
 
   /* 입력 상태 변화 */
   const handleInputChange =
-    (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    (field: keyof SignUpFormData) =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
       setFormData((prev) => ({
         ...prev,
         [field]: value,
       }));
       if (field === 'name') {
-        if (/\s/.test(value)) {
-          setErrors((prev) => ({
-            ...prev,
-            name: '띄어쓰기 없이 붙여 작성해주세요.',
-          }));
-          return;
-        }
-
-        if (value.length > 10) {
-          setErrors((prev) => ({
-            ...prev,
-            name: '최대 글자수를 초과했습니다.',
-          }));
-          return;
-        }
-
-        setErrors((prev) => ({ ...prev, name: '' }));
+        setErrors((prev) => ({ ...prev, name: validateName(value) }));
       }
-      if (field === 'password' || field === 'confirmPassword') {
-        const newPassword = field === 'password' ? value : formData.password;
-        const newConfirm =
-          field === 'confirmPassword' ? value : formData.confirmPassword;
 
-        if (newConfirm && newPassword !== newConfirm) {
-          setErrors((prev) => ({
-            ...prev,
-            confirmPassword: '비밀번호가 일치하지 않습니다.',
-          }));
-        } else {
-          setErrors((prev) => ({
-            ...prev,
-            confirmPassword: '비밀번호가 일치합니다.',
-          }));
-        }
+      if (field === 'password' || field === 'confirmPassword') {
+        setErrors((prev) => ({
+          ...prev,
+          confirmPassword: validatePasswordMatch(
+            field === 'password' ? value : formData.password,
+            field === 'confirmPassword' ? value : formData.confirmPassword,
+          ),
+        }));
       }
     };
 
   return (
     <form className="hbp:w-[550px] hbp:gap-[75px] flex w-110 flex-col gap-15">
+      {/*이메일 섹션*/}
       <div className="hbp:gap-[12.5px] flex w-full flex-col gap-[10px]">
         <label
           htmlFor="email"
@@ -122,35 +108,28 @@ const SignUpForm = () => {
             'hbp: hbp:text-body-xl-regular mb-[8px] mb-[9px] outline-none focus:border-yellow-500'
           }
         />
-        <TextField
+
+        {/*비밀번호 재입력 섹션 */}
+        <FormInput
+          id="confirmPassword"
           type="password"
           placeholder="비밀번호를 재입력해주세요."
           value={formData.confirmPassword}
           onChange={handleInputChange('confirmPassword')}
-          className={`hbp:text-body-xl-regular border outline-none ${
-            !formData.confirmPassword
-              ? 'focus:border-yellow-500'
-              : formData.password !== formData.confirmPassword
-                ? 'border-red-500'
-                : 'border-green-500'
-          }`}
+          compareValue={formData.password}
+          successMessage={
+            formData.confirmPassword &&
+            formData.password === formData.confirmPassword
+              ? '비밀번호가 일치합니다.'
+              : undefined
+          }
+          error={
+            formData.confirmPassword &&
+            formData.password !== formData.confirmPassword
+              ? '비밀번호가 일치하지 않습니다.'
+              : undefined
+          }
         />
-        {formData.confirmPassword && (
-          <div
-            className={`text-caption-sm-regular mt-1 flex items-center gap-1.5 ${
-              errors.confirmPassword === '비밀번호가 일치합니다.'
-                ? 'text-green-500'
-                : 'text-red-500'
-            }`}
-          >
-            {errors.confirmPassword === '비밀번호가 일치합니다.' ? (
-              <SuccessIcon />
-            ) : (
-              <FailIcon />
-            )}
-            <p>{errors.confirmPassword}</p>
-          </div>
-        )}
       </div>
 
       {/* 이름 섹션 */}
@@ -164,24 +143,14 @@ const SignUpForm = () => {
         <p className="hbp:mb-[7.5px] text-caption-sm-medium hbp:text-body-md-medium text-grey-300 mb-[6px]">
           최대 10글자 이내로 작성해주세요.
         </p>
-        <TextField
+        <FormInput
           id="name"
           type="text"
           placeholder="이름을 입력해주세요."
           value={formData.name}
           onChange={handleInputChange('name')}
-          className={`hbp:text-body-xl-regular border outline-none ${
-            errors.name
-              ? 'border-red-500 focus:border-red-500'
-              : 'focus:border-yellow-500'
-          } `}
+          error={errors.name}
         />
-        {errors.name && (
-          <div className="r hbp:gap-[7.5px] text-caption-sm-regular mt-1 flex flex-row items-center gap-1.5">
-            <FailIcon />
-            <p className="mt-1 text-xs text-red-500">{errors.name}</p>
-          </div>
-        )}
       </div>
 
       {/* 완료 버튼 */}
