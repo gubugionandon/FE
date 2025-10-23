@@ -15,6 +15,7 @@ export default function LoginButton({
 }: LoginButtonProps) {
   return (
     <Button
+      text="로그인"
       type={type}
       onClick={onClick}
       disabled={disabled}
