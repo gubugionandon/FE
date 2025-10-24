@@ -96,8 +96,3 @@
   --color-grey-950: #fcfcfc;
   --color-grey-1000: #ffffff;
 }
-
-/* 반응형 Breakpoint 정의 */
-@theme {
-  --breakpoint-hbp: 57.5rem; /* 920px*/
-}

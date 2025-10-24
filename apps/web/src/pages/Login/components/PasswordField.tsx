@@ -25,6 +25,7 @@ const PasswordField = ({
   return (
     <div className="relative w-full">
       <TextInput
+        id="password"
         type={isVisible ? 'text' : 'password'}
         placeholder={placeholder}
         value={value}
@@ -39,9 +40,9 @@ const PasswordField = ({
           className="absolute top-1/2 right-6 -translate-y-1/2 p-1 hover:bg-gray-100"
         >
           {isVisible ? (
-            <InvisibleIcon className="hbp:h-6 h-5 w-5 w-6" />
+            <InvisibleIcon className="hbp:h-6 hbp:w-6 h-5 w-5" />
           ) : (
-            <VisibleIcon className="hbp:h-6 h-5 w-5 w-6" />
+            <VisibleIcon className="hbp:h-6 hbp:w-6 h-5 w-5" />
           )}
         </button>
       )}
