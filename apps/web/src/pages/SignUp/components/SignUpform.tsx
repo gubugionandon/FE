@@ -138,6 +138,11 @@ const SignUpForm = () => {
           placeholder="이름을 입력해주세요."
           value={formData.name}
           onChange={handleInputChange('name')}
+          successMessage={
+            formData.name && !errors.name
+              ? '사용 가능한 이름입니다.'
+              : undefined
+          }
           error={errors.name}
         />
       </div>

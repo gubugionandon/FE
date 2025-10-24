@@ -18,7 +18,6 @@ const PasswordField = ({
 }: PasswordFieldProps) => {
   /* 비밀번호 보이기/숨기기 */
   const [isVisible, setIsVisible] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
 
   const toggleVisibility = () => setIsVisible((prev) => !prev);
 
@@ -30,6 +29,7 @@ const PasswordField = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        maxLength={16}
         className={`hbp:text-body-lg-regular aspect-[44/6] outline-none ${className}`}
       />
       {value && (
