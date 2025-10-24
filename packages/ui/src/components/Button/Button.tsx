@@ -9,7 +9,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          'bg-yellow-400 text-grey-1000 hover:bg-yellow-500 active:bg-yellow-600 disabled:bg-grey-200 disabled:text-grey-0 ',
+          'bg-yellow-400 text-grey-1000 hover:bg-yellow-500 active:bg-yellow-600 disabled:bg-grey-200 disabled:text-grey-100 ',
       },
       size: {
         xs: 'h-[33px] px-3 text-caption-sm-medium',
@@ -28,16 +28,20 @@ const buttonVariants = cva(
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {}
+    VariantProps<typeof buttonVariants> {
+  text?: string;
+}
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, ...props }, ref) => {
+  ({ className, variant, size, text, ...props }, ref) => {
     return (
       <button
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
-      />
+      >
+        {text}
+      </button>
     );
   },
 );

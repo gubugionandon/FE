@@ -1,6 +1,7 @@
 import { Button } from '@ui/Button/Button';
 
 interface LoginButtonProps {
+  text?: string;
   type?: 'button' | 'submit' | 'reset';
   onClick?: () => void;
   disabled?: boolean;
@@ -8,6 +9,7 @@ interface LoginButtonProps {
 }
 
 export default function LoginButton({
+  text = '',
   type = 'button',
   onClick,
   disabled = true,

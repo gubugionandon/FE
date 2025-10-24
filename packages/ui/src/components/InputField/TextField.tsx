@@ -1,4 +1,5 @@
 interface TextFieldProps {
+  id?: string;
   type?: string;
   placeholder?: string;
   value?: string;
@@ -9,6 +10,7 @@ interface TextFieldProps {
 }
 
 export default function TextField({
+  id,
   type = 'text',
   placeholder = '이름을 입력하세요',
   value,
@@ -19,13 +21,14 @@ export default function TextField({
 }: TextFieldProps) {
   return (
     <input
+      id={id}
       type={type}
       placeholder={placeholder}
       value={value}
       onChange={onChange}
       onFocus={onFocus}
       onBlur={onBlur}
-      className={`flex aspect-[44/6] w-full cursor-pointer flex-row rounded-full border border-[#E3E1DF] px-6 ${className}`}
+      className={`flex aspect-[44/6] w-full cursor-pointer flex-row rounded-full border border-[#E3E1DF] bg-[#ffffff] px-6 ${className}`}
     />
   );
 }

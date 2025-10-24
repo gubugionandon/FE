@@ -5,7 +5,7 @@ import FailIcon from '@assets/auth/error_icon.svg?react';
 import PasswordField from '../../Login/components/PasswordField';
 
 interface FormInputProps {
-  id: string;
+  id?: string;
   type?: string;
   placeholder?: string;
   value: string;

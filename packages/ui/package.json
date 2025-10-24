@@ -40,7 +40,8 @@
     "./AnimatedBox": "./src/components/AnimatedBox/AnimatedBox.tsx",
     "./Header": "./src/components/Header/Header.tsx",
     "./Page": "./src/components/Page/Page.tsx",
-    "./Alert": "./src/components/Alert/Alert.tsx"
+    "./Alert": "./src/components/Alert/Alert.tsx",
+    "./TextField": "./src/components/InputField/TextField.tsx"
   },
   "scripts": {
     "storybook": "storybook dev -p 6006",
