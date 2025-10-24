@@ -21,8 +21,6 @@ const PasswordField = ({
   const [isFocused, setIsFocused] = useState(false);
 
   const toggleVisibility = () => setIsVisible((prev) => !prev);
-  const handleFocus = () => setIsFocused(true);
-  const handleBlur = () => setIsFocused(false);
 
   return (
     <div className="relative w-full">
@@ -31,11 +29,9 @@ const PasswordField = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
         className={`hbp:text-body-lg-regular aspect-[44/6] outline-none ${className}`}
       />
-      {isFocused && (
+      {value && (
         <button
           type="button"
           onMouseDown={(e) => e.preventDefault()}

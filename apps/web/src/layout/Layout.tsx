@@ -7,11 +7,7 @@ const Layout = () => {
   const hideHeader = location.pathname === '/auth/login';
 
   return (
-    <div
-      className={`min-h-screen w-screen ${
-        !hideHeader ? 'hbp:pt-[75px] pt-15' : ''
-      }`}
-    >
+    <div className={`min-h-screen ${!hideHeader ? 'hbp:pt-[75px] pt-15' : ''}`}>
       {!hideHeader && <Header />}
       <Outlet />
     </div>

@@ -15,7 +15,6 @@ interface SignUpFormData {
 interface FormErrors {
   email: string;
   password: string;
-  confirmPassword: string;
   name: string;
 }
 
@@ -30,7 +29,6 @@ const SignUpForm = () => {
   const [errors, setErrors] = useState<FormErrors>({
     email: '',
     password: '',
-    confirmPassword: '',
     name: '',
   });
 
@@ -50,7 +48,7 @@ const SignUpForm = () => {
       if (field === 'password' || field === 'confirmPassword') {
         setErrors((prev) => ({
           ...prev,
-          confirmPassword: validatePasswordMatch(
+          password: validatePasswordMatch(
             field === 'password' ? value : formData.password,
             field === 'confirmPassword' ? value : formData.confirmPassword,
           ),
@@ -119,12 +117,7 @@ const SignUpForm = () => {
               ? '비밀번호가 일치합니다.'
               : undefined
           }
-          error={
-            formData.confirmPassword &&
-            formData.password !== formData.confirmPassword
-              ? '비밀번호가 일치하지 않습니다.'
-              : undefined
-          }
+          error={errors.password}
         />
       </div>
 

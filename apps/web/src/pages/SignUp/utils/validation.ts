@@ -10,5 +10,5 @@ export const validatePasswordMatch = (
 ): string => {
   if (!confirmPassword) return '';
   if (password !== confirmPassword) return '비밀번호가 일치하지 않습니다.';
-  return '비밀번호가 일치합니다.';
+  return '';
 };
