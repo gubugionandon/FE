@@ -10,29 +10,29 @@
   --color-accent-foreground: hsl(222.2 84% 4.9%);
   --color-input: hsl(214.3 31.8% 91.4%);
   --color-background: hsl(0 0% 100%);
-  
+
   /* Yellow 컬러 팔레트 */
-  --color-yellow-50: #FFF9E6;
-  --color-yellow-100: #FFEBB0;
-  --color-yellow-200: #FFE28A;
-  --color-yellow-300: #FFD454;
-  --color-yellow-400: #FFCC33;
-  --color-yellow-500: #FFBF00;
-  --color-yellow-600: #E8AE00;
-  --color-yellow-700: #D29A00;
-  --color-yellow-800: #BD8700;
-  --color-yellow-900: #A67100;
+  --color-yellow-50: #fff9e6;
+  --color-yellow-100: #ffebb0;
+  --color-yellow-200: #ffe28a;
+  --color-yellow-300: #ffd454;
+  --color-yellow-400: #ffcc33;
+  --color-yellow-500: #ffbf00;
+  --color-yellow-600: #e8ae00;
+  --color-yellow-700: #d29a00;
+  --color-yellow-800: #bd8700;
+  --color-yellow-900: #a67100;
 
   /* Grey 컬러 팔레트 */
-  --color-grey-0: #FFFFFF;
-  --color-grey-50: #EFEEED;
-  --color-grey-100: #E3E1DF;
-  --color-grey-200: #C6C5C3;
-  --color-grey-300: #A8A7A4;
-  --color-grey-400: #7E7E7B;
-  --color-grey-500: #6A6966;
-  --color-grey-600: #3C3B3A;
-  --color-grey-700: #2C2C2C;
+  --color-grey-0: #ffffff;
+  --color-grey-50: #efeeed;
+  --color-grey-100: #e3e1df;
+  --color-grey-200: #c6c5c3;
+  --color-grey-300: #a8a7a4;
+  --color-grey-400: #7e7e7b;
+  --color-grey-500: #6a6966;
+  --color-grey-600: #3c3b3a;
+  --color-grey-700: #2c2c2c;
   --color-grey-800: #212121;
   --color-grey-900: #181817;
   --color-grey-950: #141413;
@@ -70,29 +70,29 @@
 /* Dark mode colors */
 .dark {
   /* Dark mode Yellow (더 어두운 톤) */
-  --color-yellow-50: #624D0B;
+  --color-yellow-50: #624d0b;
   --color-yellow-100: #806310;
-  --color-yellow-200: #9D7B13;
-  --color-yellow-300: #C59A18;
-  --color-yellow-400: #E0AE1C;
-  --color-yellow-500: #E7BD3E;
-  --color-yellow-600: #E9C34F;
-  --color-yellow-700: #EDCD73;
-  --color-yellow-800: #F2DA9B;
-  --color-yellow-900: #F7E5C0;
+  --color-yellow-200: #9d7b13;
+  --color-yellow-300: #c59a18;
+  --color-yellow-400: #e0ae1c;
+  --color-yellow-500: #e7bd3e;
+  --color-yellow-600: #e9c34f;
+  --color-yellow-700: #edcd73;
+  --color-yellow-800: #f2da9b;
+  --color-yellow-900: #f7e5c0;
 
   /* Dark mode Grey (역전된 스케일) */
   --color-grey-0: #131312;
   --color-grey-50: #191918;
-  --color-grey-100: #2C2C2C;
-  --color-grey-200: #3C3B3A;
-  --color-grey-300: #6A6966;
-  --color-grey-400: #7E7E7B;
-  --color-grey-500: #A8A7A4;
-  --color-grey-600: #C6C5C3;
-  --color-grey-700: #E3E1DF;
-  --color-grey-800: #EFEEED;
-  --color-grey-900: #F9F8F7;
-  --color-grey-950: #FCFCFC;
-  --color-grey-1000: #FFFFFF;
+  --color-grey-100: #2c2c2c;
+  --color-grey-200: #3c3b3a;
+  --color-grey-300: #6a6966;
+  --color-grey-400: #7e7e7b;
+  --color-grey-500: #a8a7a4;
+  --color-grey-600: #c6c5c3;
+  --color-grey-700: #e3e1df;
+  --color-grey-800: #efeeed;
+  --color-grey-900: #f9f8f7;
+  --color-grey-950: #fcfcfc;
+  --color-grey-1000: #ffffff;
 }

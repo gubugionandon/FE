@@ -50,16 +50,16 @@ export const Header = ({
             <span className="welcome">
               Welcome, <b>{user.name}</b>!
             </span>
-            <Button size="small" onClick={onLogout}>
+            <Button size="sm" onClick={onLogout}>
               Log out
             </Button>
           </>
         ) : (
           <>
-            <Button size="small" onClick={onLogin}>
+            <Button size="sm" onClick={onLogin}>
               Log in
             </Button>
-            <Button size="small" onClick={onCreateAccount}>
+            <Button size="sm" onClick={onCreateAccount}>
               Sign up
             </Button>
           </>

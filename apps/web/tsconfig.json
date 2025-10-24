@@ -3,12 +3,18 @@
   "compilerOptions": {
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
-    "noEmit": true
+    "noEmit": true,
+    "paths": {
+      "@ui/*": ["../../packages/ui/src/components/*"],
+      "@assets/*": ["./src/assets/*"]
+    }
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    "../electron/layers/preload/exposedInMainWorld.d.ts"
+    "../electron/layers/preload/exposedInMainWorld.d.ts",
+    "src",
+    "src/types"
   ],
   "exclude": ["node_modules"]
 }
