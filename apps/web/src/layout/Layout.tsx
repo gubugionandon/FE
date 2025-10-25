@@ -1,4 +1,5 @@
 import { Outlet, useLocation } from 'react-router-dom';
+import DevNavbar from '../components/DevNavbar/DevNavbar';
 import Header from './Header/Header';
 
 const Layout = () => {
@@ -8,6 +9,7 @@ const Layout = () => {
 
   return (
     <div className={`min-h-screen ${!hideHeader ? 'hbp:pt-[75px] pt-15' : ''}`}>
+      <DevNavbar />
       {!hideHeader && <Header />}
       <Outlet />
     </div>
