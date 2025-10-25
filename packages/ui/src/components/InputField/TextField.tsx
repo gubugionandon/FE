@@ -3,6 +3,7 @@ interface TextFieldProps {
   type?: string;
   placeholder?: string;
   value?: string;
+  maxLength?: number;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onFocus?: () => void;
   onBlur?: () => void;
@@ -14,6 +15,7 @@ export default function TextField({
   type = 'text',
   placeholder = '이름을 입력하세요',
   value,
+  maxLength,
   onChange,
   onFocus,
   onBlur,
@@ -25,6 +27,7 @@ export default function TextField({
       type={type}
       placeholder={placeholder}
       value={value}
+      maxLength={maxLength}
       onChange={onChange}
       onFocus={onFocus}
       onBlur={onBlur}
