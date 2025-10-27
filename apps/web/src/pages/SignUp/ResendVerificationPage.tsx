@@ -1,4 +1,5 @@
 import ResendEmailHerosection from './components/ResendEmailHeroSection';
+import ResendSection from './components/ResendSection';
 import VerifyAction from './components/VerifyAction';
 
 const ResendVerificationPage = () => {
@@ -8,12 +9,7 @@ const ResendVerificationPage = () => {
         <section className="= flex w-full flex-col items-center justify-center px-7">
           <ResendEmailHerosection />
           <VerifyAction />
-          <p className="text-caption-sm-regular text-grey-300 mt-8 flex flex-row gap-4">
-            이메일을 못받으셨나요?
-            <span className="text-yellow-500 underline">
-              이메일 다시 보내기
-            </span>
-          </p>
+          <ResendSection />
         </section>
       </div>
     </main>
