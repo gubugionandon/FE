@@ -59,7 +59,7 @@ export default function FormInput({
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          className={`hbp:text-body-xl-regular border outline-none ${borderClass} ${className}`}
+          className={`hbp:text-body-xl-regular border ${borderClass} ${className}`}
         />
       )}
 
