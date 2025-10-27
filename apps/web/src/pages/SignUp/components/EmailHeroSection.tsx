@@ -1,6 +1,6 @@
 import EmailIcon from '@assets/auth/email_icon.svg?react';
 
-export default function HeroSection() {
+export default function EmailHeroSection() {
   return (
     <div className="flex flex-col items-center gap-[46px]">
       <EmailIcon className="ml-5" />

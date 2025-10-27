@@ -30,7 +30,7 @@ const PasswordField = ({
         value={value}
         onChange={onChange}
         maxLength={16}
-        className={`hbp:text-body-lg-regular aspect-[44/6] outline-none ${className}`}
+        className={`hbp:text-body-lg-regular aspect-[44/6] ${className}`}
       />
       {value && (
         <button

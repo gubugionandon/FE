@@ -37,12 +37,11 @@ const LoginForm = () => {
             placeholder="이메일"
             value={formData.email}
             onChange={(e) => handleInputChange('email', e.target.value)}
-            className="hbp:text-body-lg-regular aspect-[44/6] outline-none focus:border-yellow-500"
+            className="hbp:text-body-lg-regular aspect-[44/6]"
           />
         </div>
         {/* 비밀번호 부분 */}
         <PasswordField
-          className="focus:border-yellow-500"
           value={formData.password}
           onChange={(e) => handleInputChange('password', e.target.value)}
         />

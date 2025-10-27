@@ -31,7 +31,7 @@ export default function TextField({
       onChange={onChange}
       onFocus={onFocus}
       onBlur={onBlur}
-      className={`flex aspect-[44/6] w-full cursor-pointer flex-row rounded-full border border-[#E3E1DF] bg-[#ffffff] px-6 ${className}`}
+      className={`flex aspect-[44/6] w-full cursor-pointer flex-row rounded-full border border-[#E3E1DF] bg-[#ffffff] px-6 outline-none focus:border-yellow-500 ${className}`}
     />
   );
 }

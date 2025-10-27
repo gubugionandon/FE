@@ -73,7 +73,7 @@ const SignUpForm = () => {
             placeholder="이메일을 입력해주세요."
             value={formData.email}
             onChange={handleInputChange('email')}
-            className={`hbp:text-body-xl-regular aspect-[338/60] flex-1 outline-none focus:border-yellow-500 ${errors.email ? 'border-red-500' : ''}`}
+            className={`hbp:text-body-xl-regular aspect-[338/60] flex-1 ${errors.email ? 'border-red-500' : ''}`}
           />
           <Button
             text="중복확인"
@@ -98,7 +98,6 @@ const SignUpForm = () => {
           영문, 숫자, 특수문자를 조합하여 8-16글자로 입력해주세요.
         </p>
         <PasswordField
-          className="focus:border-yellow-500"
           value={formData.password}
           onChange={handleInputChange('password')}
         />
