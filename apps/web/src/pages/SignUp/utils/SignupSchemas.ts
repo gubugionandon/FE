@@ -14,6 +14,7 @@ export const signUpSchema = z
     confirmPassword: z.string(),
     name: z
       .string()
+      .min(1, '이름을 입력해주세요.')
       .max(10, '최대 글자수를 초과했습니다.')
       .refine((val) => !/\s/.test(val), {
         message: '띄어쓰기 없이 붙여 작성해주세요.',

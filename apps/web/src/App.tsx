@@ -3,8 +3,11 @@ import { useState } from 'react';
 import { Alert, Button } from 'ui';
 import { router } from './routers';
 import { RouterProvider } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 function App() {
+  const queryClient = new QueryClient();
+
   const [inputData, setInputData] = useState<string>('0.1');
 
   // React Query hooks
@@ -26,9 +29,9 @@ function App() {
   };
 
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
-    </>
+    </QueryClientProvider>
   );
 }
 
