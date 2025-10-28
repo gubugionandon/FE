@@ -1,5 +1,5 @@
 import { ElectronAPI } from 'api';
-import { app, ipcMain, session } from 'electron';
+import { app, ipcMain } from 'electron';
 import './security-restrictions';
 import { restoreOrCreateWindow } from '/@/mainWindow';
 
@@ -110,33 +110,6 @@ app
   .whenReady()
   .then(restoreOrCreateWindow)
   .then(() => {
-    /**
-     * Setup media permissions for camera/microphone access
-     */
-    const allowlist = new Set([
-      'http://localhost:3000',
-      'http://localhost:5173',
-      'https://www.bugi.co.kr',
-    ]);
-
-    session.defaultSession.setPermissionRequestHandler(
-      (webContents, permission, callback, details) => {
-        const url = new URL(details.requestingUrl);
-        const origin = `${url.protocol}//${url.host}`;
-
-        console.log(`Permission request: ${permission} from ${origin}`);
-
-        if (permission === 'media' && allowlist.has(origin)) {
-          // 카메라/마이크 권한 허용
-          console.log(`Media permission granted for ${origin}`);
-          callback(true);
-        } else {
-          console.log(`Permission denied for ${permission} from ${origin}`);
-          callback(false);
-        }
-      },
-    );
-
     /**
      * Install React & Redux devtools in development mode only
      */
