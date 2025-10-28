@@ -16,7 +16,7 @@ const CalibrationPage = () => {
     <main className="bg-grey-50 flex min-h-screen flex-col items-center">
       <section className="hbp:px-[105px] flex h-screen w-full items-center justify-center">
         {/* 메인 콘텐츠 영역 */}
-        <div className="flex w-full gap-12">
+        <div className="flex w-full justify-center gap-12">
           {/* 왼쪽 웹캠 영역 */}
           <WebcamView
             isWebcamOn={isWebcamOn}

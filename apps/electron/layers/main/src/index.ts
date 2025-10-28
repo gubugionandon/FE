@@ -115,6 +115,7 @@ app
      */
     const allowlist = new Set([
       'http://localhost:3000',
+      'http://localhost:5173',
       'https://www.bugi.co.kr',
     ]);
 
