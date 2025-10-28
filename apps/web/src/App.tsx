@@ -1,8 +1,7 @@
 import { useEnvironment, useHashMutation, useHealth, useVersion } from 'api';
 import { useState } from 'react';
-import { Alert, Button } from 'ui';
-import { router } from './routers';
 import { RouterProvider } from 'react-router-dom';
+import { router } from './routers';
 
 function App() {
   const [inputData, setInputData] = useState<string>('0.1');

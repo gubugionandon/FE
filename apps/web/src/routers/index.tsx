@@ -1,15 +1,31 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from '../layout/Layout';
+import CalibrationPage from '../pages/Calibration/CalibrationPage';
 import LoginPage from '../pages/Login/LoginPage';
+import MainPage from '../pages/Main/MainPage';
+import OnboardingPage from '../pages/Onboarding/OnboardingPage';
 import SignUpPage from '../pages/SignUp/SignUpPage';
 
 export const router = createBrowserRouter([
+  {
+    element: <Layout />,
+    path: '/',
+    children: [{ path: '', element: <MainPage /> }],
+  },
   {
     element: <Layout />,
     path: '/auth',
     children: [
       { path: 'login', element: <LoginPage /> },
       { path: 'signup', element: <SignUpPage /> },
+    ],
+  },
+  {
+    element: <Layout />,
+    path: '/onboarding',
+    children: [
+      { path: '', element: <OnboardingPage /> },
+      { path: 'calibration', element: <CalibrationPage /> },
     ],
   },
 ]);
