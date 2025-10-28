@@ -25,6 +25,7 @@
 
   /* Grey 컬러 팔레트 */
   --color-grey-0: #ffffff;
+  --color-grey-25: #f9f8f7;
   --color-grey-50: #efeeed;
   --color-grey-100: #e3e1df;
   --color-grey-200: #c6c5c3;
@@ -37,6 +38,15 @@
   --color-grey-900: #181817;
   --color-grey-950: #141413;
   --color-grey-1000: #000000;
+
+  --color-gradation: linear-gradient(
+    180deg,
+    #ffcc00 0%,
+    #ffbf00 50%,
+    #ffae00 100%
+  );
+  --color-error: #ff3232;
+  --color-success: #00bf29;
 }
 
 @theme inline {
@@ -53,6 +63,7 @@
   --color-yellow-900: var(--color-yellow-900);
 
   --color-grey-0: var(--color-grey-0);
+  --color-grey-25: var(--color-grey-25);
   --color-grey-50: var(--color-grey-50);
   --color-grey-100: var(--color-grey-100);
   --color-grey-200: var(--color-grey-200);
@@ -82,8 +93,9 @@
   --color-yellow-900: #f7e5c0;
 
   /* Dark mode Grey (역전된 스케일) */
-  --color-grey-0: #131312;
-  --color-grey-50: #191918;
+  --color-grey-0: #191917;
+  --color-grey-25: #131312;
+  --color-grey-50: #232323;
   --color-grey-100: #2c2c2c;
   --color-grey-200: #3c3b3a;
   --color-grey-300: #6a6966;
