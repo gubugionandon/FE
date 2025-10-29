@@ -43,11 +43,11 @@ async function createWindow() {
         responseHeaders: {
           ...details.responseHeaders,
           'Content-Security-Policy': [
-            "default-src 'self' 'unsafe-inline' data: https://www.bugi.co.kr;",
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.bugi.co.kr;",
+            "default-src 'self' 'unsafe-inline' data: https://www.bugi.co.kr https://api.bugi.co.kr;",
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.bugi.co.kr https://api.bugi.co.kr;",
             "style-src 'self' 'unsafe-inline' https://www.bugi.co.kr;",
-            "img-src 'self' data: https://www.bugi.co.kr;",
-            "connect-src 'self' https://www.bugi.co.kr;",
+            "img-src 'self' data: https://www.bugi.co.kr https://api.bugi.co.kr;",
+            "connect-src 'self' https://www.bugi.co.kr https://api.bugi.co.kr;",
             "font-src 'self' data: https://www.bugi.co.kr;",
             "object-src 'none';",
           ],
