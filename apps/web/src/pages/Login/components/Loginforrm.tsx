@@ -39,6 +39,7 @@ const LoginForm = () => {
     });
   };
 
+  const email = watch('email');
   const password = watch('password');
 
   return (
@@ -80,7 +81,7 @@ const LoginForm = () => {
         </div>
 
         {/* 버튼 */}
-        <LoginButton type="submit" disabled={!isValid} />
+        <LoginButton type="submit" disabled={!email || !password} />
       </form>
 
       {/* 회원가입 / 비밀번호 찾기 */}
