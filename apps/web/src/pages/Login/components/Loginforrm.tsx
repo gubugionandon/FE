@@ -4,6 +4,7 @@ import SaveIdIcon from '@assets/auth/saveid_icon.svg?react';
 import LoginButton from './LoginButton';
 import PasswordField from './PasswordField';
 import { useNavigate } from 'react-router-dom';
+import { useLoginMutation } from '../../../api/login/useLoginMutation';
 
 interface LoginFormData {
   email: string;
@@ -26,10 +27,15 @@ const LoginForm = () => {
     },
   });
 
+  const loginMutation = useLoginMutation();
   const navigate = useNavigate();
 
   const onSubmit = (data: LoginFormData) => {
     console.log('로그인 시도:', data);
+    loginMutation.mutate({
+      email: data.email,
+      password: data.password,
+    });
   };
 
   const password = watch('password');
