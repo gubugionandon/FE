@@ -1,10 +1,21 @@
 import { Button } from '@ui/Button/Button';
 import EmailHeroSection from './components/EmailHeroSection';
 import ResendSection from './components/ResendSection';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useVerifyEmailMutation } from '../../api/signup/verifyEmail';
 
 const EmailVerificationPage = () => {
+  const [searchParams] = useSearchParams();
+  const verifyEmailMutation = useVerifyEmailMutation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = searchParams.get('token');
+    if (token) {
+      verifyEmailMutation.mutate(token);
+    }
+  }, [searchParams]);
 
   return (
     <main className="hbp:min-h-[calc(100vh-75px)] flex min-h-[calc(100vh-60px)] flex-col items-center justify-center">

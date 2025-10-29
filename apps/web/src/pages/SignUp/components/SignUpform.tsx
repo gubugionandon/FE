@@ -11,6 +11,7 @@ import {
   useSignupMutation,
 } from '../../../api/signup/signup';
 import { useState } from 'react';
+import { useEmailStore } from '../../../store/useSignUpStore';
 
 const SignUpForm = () => {
   const { mutate: checkDuplicateEmail } = useDuplicatedEmailMutation();
@@ -19,6 +20,7 @@ const SignUpForm = () => {
   const [duplicateSuccess, setDuplicateSuccess] = useState<boolean | null>(
     null,
   );
+  const { setEmail } = useEmailStore();
 
   const {
     register,
@@ -46,10 +48,12 @@ const SignUpForm = () => {
 
     checkDuplicateEmail(email, {
       onSuccess: (data) => {
-        if (data?.isDuplicate) {
+        if (data?.data?.isDuplicate) {
+          console.log(data);
           setDuplicateSuccess(false);
           setDuplicateMessage('이미 가입된 이메일입니다.');
         } else {
+          console.log(data);
           setDuplicateSuccess(true);
           setDuplicateMessage('사용 가능한 이메일입니다');
         }
@@ -67,6 +71,9 @@ const SignUpForm = () => {
       setDuplicateSuccess(false);
       return;
     }
+
+    setEmail(data.email);
+
     signupMutation.mutate({
       email: data.email,
       password: data.password,
