@@ -5,6 +5,7 @@ interface TextFieldProps {
   type?: string;
   placeholder?: string;
   value?: string;
+  disabled?: boolean;
   maxLength?: number;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
@@ -21,6 +22,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       placeholder = '이름을 입력하세요',
       value,
       maxLength,
+      disabled,
       onChange,
       onFocus,
       onBlur,
@@ -38,6 +40,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         placeholder={placeholder}
         value={value}
         maxLength={maxLength}
+        disabled={disabled}
         onChange={onChange}
         onFocus={onFocus}
         onBlur={onBlur}
