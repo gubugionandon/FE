@@ -6,11 +6,15 @@ import PasswordField from '../../Login/components/PasswordField';
 import SuccessIcon from '@assets/auth/success_icon.svg?react';
 import FailIcon from '@assets/auth/error_icon.svg?react';
 import { signUpSchema, SignUpFormData } from '../utils/SignupSchemas';
-import { useDuplicatedEmailMutation } from '../../../api/signup/signup';
+import {
+  useDuplicatedEmailMutation,
+  useSignupMutation,
+} from '../../../api/signup/signup';
 import { useState } from 'react';
 
 const SignUpForm = () => {
   const { mutate: checkDuplicateEmail } = useDuplicatedEmailMutation();
+  const signupMutation = useSignupMutation();
   const [duplicateMessage, setDuplicateMessage] = useState<string | null>(null);
   const [duplicateSuccess, setDuplicateSuccess] = useState<boolean | null>(
     null,
@@ -58,7 +62,18 @@ const SignUpForm = () => {
   };
 
   const onSubmit = (data: SignUpFormData) => {
-    console.log('Form submitted:', data);
+    if (duplicateSuccess !== true) {
+      setDuplicateMessage('이메일 중복확인을 완료해주세요');
+      setDuplicateSuccess(false);
+      return;
+    }
+    signupMutation.mutate({
+      email: data.email,
+      password: data.password,
+      name: data.name,
+      avatar: '',
+      callbackUrl: '',
+    });
   };
 
   return (
@@ -79,7 +94,15 @@ const SignUpForm = () => {
             id="email"
             type="email"
             placeholder="이메일을 입력해주세요."
-            {...register('email')}
+            {...register('email', {
+              onChange: () => {
+                // 이메일 값이 바뀌면 중복확인 상태 초기화
+                if (duplicateSuccess !== null) {
+                  setDuplicateSuccess(null);
+                  setDuplicateMessage(null);
+                }
+              },
+            })}
             className={`hbp:text-body-xl-regular aspect-[338/60] flex-1 ${
               errors.email
                 ? '!border-red-500'
@@ -94,6 +117,7 @@ const SignUpForm = () => {
             onClick={handleDuplicateCheck}
             text="중복확인"
             size="sm"
+            disabled={duplicateSuccess === true}
             className="hbp:w-[115px] hbp:h-[50px] hbp:text-body-xl-medium w-[92px] whitespace-nowrap"
           />
         </div>
@@ -207,7 +231,7 @@ const SignUpForm = () => {
       </div>
 
       {/* 완료 버튼 */}
-      <Button text="완료" size="xl" disabled={!isValid} />
+      <Button type="submit" text="완료" size="xl" disabled={!isValid} />
     </form>
   );
 };
