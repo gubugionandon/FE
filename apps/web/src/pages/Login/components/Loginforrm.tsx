@@ -5,6 +5,7 @@ import LoginButton from './LoginButton';
 import PasswordField from './PasswordField';
 import { useNavigate } from 'react-router-dom';
 import { useLoginMutation } from '../../../api/login/useLoginMutation';
+import FailIcon from '@assets/auth/error_icon.svg?react';
 
 interface LoginFormData {
   email: string;
@@ -56,6 +57,12 @@ const LoginForm = () => {
 
         {/* 비밀번호 */}
         <PasswordField {...register('password')} hasValue={!!password} />
+        {loginMutation.isError && (
+          <div className="text-caption-sm-regular flex items-center gap-1 self-start text-red-500">
+            <FailIcon className="h-[16px] w-[16px]" />
+            <span>이메일 또는 비밀번호가 올바르지 않습니다.</span>
+          </div>
+        )}
 
         {/* 아이디 저장 */}
         <div className="text-caption-sm-regular hbp:text-body-lg-regular text-grey-400 mt-1 flex w-full justify-start gap-3">

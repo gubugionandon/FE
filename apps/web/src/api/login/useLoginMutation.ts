@@ -26,6 +26,8 @@ export const useLoginMutation = () => {
       /*access Token, refresh Token 저장 */
       localStorage.setItem('accessToken', res.data.accessToken);
       localStorage.setItem('refreshToken', res.data.refreshToken);
+
+      navigate('/onboarding');
     },
     onError: (error) => {
       console.error('로그인 오류:', error);
