@@ -21,7 +21,6 @@ const SignUpForm = () => {
     null,
   );
   const { setEmail } = useEmailStore();
-
   const {
     register,
     handleSubmit,
@@ -39,9 +38,9 @@ const SignUpForm = () => {
     },
   });
 
-  /* 실시간 입력값 */
   const formValues = watch();
 
+  /* 이메일 중복 확인 */
   const handleDuplicateCheck = () => {
     const email = getValues('email');
     if (!email) return;
@@ -65,6 +64,7 @@ const SignUpForm = () => {
     });
   };
 
+  /* 회원가입 */
   const onSubmit = (data: SignUpFormData) => {
     if (duplicateSuccess !== true) {
       setDuplicateMessage('이메일 중복확인을 완료해주세요');

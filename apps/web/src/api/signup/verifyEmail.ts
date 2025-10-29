@@ -7,6 +7,7 @@ export interface ResendVerifyEmailRequest {
   callbackUrl: string;
 }
 
+/*이메일 인증 api*/
 const verifyEmail = async (token: string) => {
   const response = await api.post('/auth/verify-email', { token });
   const result = response.data;
@@ -18,6 +19,7 @@ const verifyEmail = async (token: string) => {
   return response.data;
 };
 
+/*이메일 인증 다시 보내기 api*/
 const resendVerifyEmail = async (data: ResendVerifyEmailRequest) => {
   const response = await api.post('/auth/resend-verification-email', {
     ...data,
@@ -39,10 +41,13 @@ export const useVerifyEmailMutation = () => {
     mutationFn: verifyEmail,
 
     onSuccess: (data) => {
-      console.log('✅ 이메일 인증 성공:', data);
+      console.log('이메일 인증 성공:', data);
+      alert('인증 성공!');
+      localStorage.clear();
     },
     onError: (error: unknown) => {
-      console.error('❌ 인증 실패:', error);
+      console.error('인증 실패:', error);
+      alert('인증 실패! 다시 시도해주세요');
     },
   });
 };
@@ -55,10 +60,10 @@ export const useResendVerifyEmailMuation = () => {
 
     onSuccess: (data) => {
       navigate('/auth/resend');
-      console.log('✅ 인증 다시 보내기 성공:', data);
+      console.log('인증 다시 보내기 성공:', data);
     },
     onError: (error: unknown) => {
-      console.error('❌ 인증 다시 실패:', error);
+      console.error('인증 다시 보내기 실패:', error);
     },
   });
 };

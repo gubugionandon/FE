@@ -17,6 +17,7 @@ const EmailVerificationPage = () => {
   const email = useEmailStore((state) => state.email);
   const navigate = useNavigate();
 
+  /* 토큰 여부에 따른 이메일 인증 */
   useEffect(() => {
     const token = searchParams.get('token');
     if (token) {
@@ -24,7 +25,8 @@ const EmailVerificationPage = () => {
     }
   }, [searchParams]);
 
-  const onSubmit = () => {
+  /*이메일 다시 보내기 */
+  const onResendClick = () => {
     resendverifyEmailMutation.mutate({ email: email, callbackUrl: '' });
   };
 
@@ -38,7 +40,7 @@ const EmailVerificationPage = () => {
             text="로그인"
             className="text-body-xl-medium h-[49px] w-[440px]"
           />
-          <ResendSection onClick={onSubmit} />
+          <ResendSection onClick={onResendClick} />
         </section>
       </div>
     </main>

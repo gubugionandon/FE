@@ -16,6 +16,7 @@ const ResendVerificationPage = () => {
   const resendverifyEmailMutation = useResendVerifyEmailMuation();
   const email = useEmailStore((state) => state.email);
 
+  /* 토큰 여부에 따른 이메일 인증 */
   useEffect(() => {
     const token = searchParams.get('token');
     if (token) {
@@ -23,7 +24,8 @@ const ResendVerificationPage = () => {
     }
   }, [searchParams]);
 
-  const onSubmit = () => {
+  /* 이메일 다시 보내기 */
+  const onResendClick = () => {
     resendverifyEmailMutation.mutate({ email: email, callbackUrl: '' });
   };
 
@@ -33,7 +35,7 @@ const ResendVerificationPage = () => {
         <section className="= flex w-full flex-col items-center justify-center px-7">
           <ResendEmailHerosection />
           <VerifyAction email={email} />
-          <ResendSection onClick={onSubmit} />
+          <ResendSection onClick={onResendClick} />
         </section>
       </div>
     </main>

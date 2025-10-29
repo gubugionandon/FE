@@ -14,7 +14,7 @@ export const useEmailStore = create<EmailState>()(
     }),
     {
       name: 'email',
-      storage: createJSONStorage(() => sessionStorage),
+      storage: createJSONStorage(() => localStorage),
     },
   ),
 );
