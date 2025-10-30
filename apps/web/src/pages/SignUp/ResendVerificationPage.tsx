@@ -4,7 +4,6 @@ import ResendSection from './components/ResendSection';
 import VerifyAction from './components/VerifyAction';
 import { useSearchParams } from 'react-router-dom';
 import {
-  ResendVerifyEmailRequest,
   useResendVerifyEmailMuation,
   useVerifyEmailMutation,
 } from '../../api/signup/verifyEmail';

@@ -4,7 +4,6 @@ import ResendSection from './components/ResendSection';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import {
-  ResendVerifyEmailRequest,
   useResendVerifyEmailMuation,
   useVerifyEmailMutation,
 } from '../../api/signup/verifyEmail';
