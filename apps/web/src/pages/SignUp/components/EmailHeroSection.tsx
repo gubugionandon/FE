@@ -1,6 +1,9 @@
 import EmailIcon from '@assets/auth/email_icon.svg?react';
+import { useEmailStore } from '../../../store/useSignUpStore';
 
 export default function EmailHeroSection() {
+  const email = useEmailStore((state) => state.email);
+
   return (
     <div className="mb-12 flex flex-col items-center gap-[46px]">
       <EmailIcon className="ml-5" />
@@ -9,8 +12,7 @@ export default function EmailHeroSection() {
         <p className="text-headline-2xl-regular text-center">
           본인 인증 메일을 귀하의
           <span className="text-headline-2xl-semibold text-yellow-500">
-            {' '}
-            boogririn@gmail.com
+            {' ' + email}
           </span>
           로 보냈습니다.
           <br />

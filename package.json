@@ -38,7 +38,10 @@
   },
   "packageManager": "npm@10.0.0",
   "dependencies": {
-    "tailwindcss": "^4.1.14"
+    "@hookform/resolvers": "^5.2.2",
+    "react-hook-form": "^7.65.0",
+    "tailwindcss": "^4.1.14",
+    "zod": "^4.1.12"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
