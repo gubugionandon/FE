@@ -33,7 +33,7 @@ async function createWindow() {
    * Production web app from bugi.co.kr
    */
   const pageUrl = import.meta.env.DEV
-    ? 'http://localhost:3000/auth/signup' // Web app dev server
+    ? 'http://localhost:3000' // Web app dev server
     : 'https://www.bugi.co.kr/'; // Production web app
 
   // Set Content Security Policy for renderer
