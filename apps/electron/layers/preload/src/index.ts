@@ -59,4 +59,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
   // Platform info
   getPlatform: () => ipcRenderer.invoke('api:platform'),
+
+  // Write log file
+  writeLog: (data: string, filename?: string) =>
+    ipcRenderer.invoke('api:writeLog', data, filename),
 });

@@ -7,12 +7,12 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # 전체 git 히스토리 가져오기
+          fetch-depth: 0 # 전체 git 히스토리 가져오기
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -22,11 +22,28 @@ jobs:
           cache-dependency-path: |
             package-lock.json
 
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Verify package-lock.json exists
+        run: |
+          if [ ! -f package-lock.json ]; then
+            echo "❌ package-lock.json not found!"
+            echo "📁 Current directory contents:"
+            ls -la
+            exit 1
+          fi
+          echo "✅ package-lock.json found"
+          echo "📋 Lockfile version:"
+          node -p "require('./package-lock.json').lockfileVersion"
+          echo "📦 npm version:"
+          npm --version
+
       - name: Install workspace dependencies
         run: |
           # 전체 workspace 의존성 설치 (husky 스크립트 무시)
           npm ci --ignore-scripts
-          
+
       - name: Verify workspace setup
         run: |
           echo "✅ Workspace dependencies installed successfully"
@@ -48,7 +65,7 @@ jobs:
         run: |
           mkdir -p output
           cp -r apps/web/dist/* output/
-          
+
           # Vercel 설정 파일 생성
           cat > output/vercel.json << 'EOF'
           {
@@ -121,7 +138,7 @@ jobs:
           destination-github-username: choihooo
           destination-repository-name: gubugionandon-FE
           user-email: ${{ secrets.EMAIL }}
-          commit-message: "🚀 Deploy web app: ${{ github.event.commits[0].message }}"
+          commit-message: '🚀 Deploy web app: ${{ github.event.commits[0].message }}'
           target-branch: main
 
       - name: Deploy info

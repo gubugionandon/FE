@@ -10,6 +10,7 @@ async function createWindow() {
       nodeIntegration: false,
       contextIsolation: true,
       allowRunningInsecureContent: false,
+      // GPU 가속은 app.commandLine.appendSwitch로 활성화됨
     },
   });
 
@@ -40,18 +41,27 @@ async function createWindow() {
   // Set Content Security Policy for renderer
   browserWindow.webContents.session.webRequest.onHeadersReceived(
     (details, callback) => {
+      const csp = [
+        "default-src 'self' data: https://www.bugi.co.kr https://api.bugi.co.kr",
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://www.bugi.co.kr https://api.bugi.co.kr",
+        "script-src-elem 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://www.bugi.co.kr https://api.bugi.co.kr",
+        "worker-src 'self' blob:",
+        // ★ 여기 추가
+        "connect-src 'self' https://cdn.jsdelivr.net https://storage.googleapis.com https://www.bugi.co.kr https://api.bugi.co.kr",
+        "style-src 'self' 'unsafe-inline' https://www.bugi.co.kr",
+        "img-src 'self' data: blob: https://www.bugi.co.kr https://api.bugi.co.kr",
+        "font-src 'self' data: https://www.bugi.co.kr",
+        "object-src 'none'",
+        "frame-ancestors 'none'",
+      ].join('; ');
+
       callback({
         responseHeaders: {
           ...details.responseHeaders,
-          'Content-Security-Policy': [
-            "default-src 'self' 'unsafe-inline' data: https://www.bugi.co.kr https://api.bugi.co.kr;",
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.bugi.co.kr https://api.bugi.co.kr;",
-            "style-src 'self' 'unsafe-inline' https://www.bugi.co.kr;",
-            "img-src 'self' data: https://www.bugi.co.kr https://api.bugi.co.kr;",
-            "connect-src 'self' https://www.bugi.co.kr https://api.bugi.co.kr;",
-            "font-src 'self' data: https://www.bugi.co.kr;",
-            "object-src 'none';",
-          ],
+          'Content-Security-Policy': [csp],
+          // (SharedArrayBuffer 쓰면) COOP/COEP도 함께 설정
+          // "Cross-Origin-Opener-Policy": ["same-origin"],
+          // "Cross-Origin-Embedder-Policy": ["require-corp"],
         },
       });
     },

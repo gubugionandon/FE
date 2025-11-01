@@ -4,6 +4,7 @@ import CalibrationPage from '../pages/Calibration/CalibrationPage';
 import LoginPage from '../pages/Login/LoginPage';
 import MainPage from '../pages/Main/MainPage';
 import OnboardingPage from '../pages/Onboarding/OnboardingPage';
+import OnboardingCompletionPage from '../pages/Onboarding/OnboardingCompletionPage';
 import SignUpPage from '../pages/SignUp/SignUpPage';
 import EmailVerificationPage from '../pages/SignUp/EmailVerificationPage';
 import ResendVerificationPage from '../pages/SignUp/ResendVerificationPage';
@@ -30,6 +31,7 @@ export const router = createBrowserRouter([
     children: [
       { path: '', element: <OnboardingPage /> },
       { path: 'calibration', element: <CalibrationPage /> },
+      { path: 'completion', element: <OnboardingCompletionPage /> },
     ],
   },
 ]);

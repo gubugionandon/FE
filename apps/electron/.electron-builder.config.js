@@ -10,8 +10,8 @@ if (process.env.VITE_APP_VERSION === undefined) {
  * @see https://www.electron.build/configuration/configuration
  */
 const config = {
-  appId: 'com.yerba.electron',
-  productName: 'Yerba',
+  appId: 'co.kr.bugi.electron',
+  productName: 'bugi',
   directories: {
     output: 'dist',
     buildResources: 'buildResources',
@@ -60,7 +60,7 @@ const config = {
     ],
     icon: 'buildResources/icon.icns',
     artifactName: '${productName}-${version}-${arch}.${ext}',
-    hardenedRuntime: true,
+    hardenedRuntime: false, // 코드 서명 없이 개발 시 false
     gatekeeperAssess: false,
     entitlements: 'buildResources/entitlements.mac.plist',
     entitlementsInherit: 'buildResources/entitlements.mac.plist',
@@ -84,7 +84,7 @@ const config = {
     ],
     icon: 'buildResources/icon.png',
     artifactName: '${productName}-${version}-${arch}.${ext}',
-    publisherName: 'Yerba',
+    publisherName: 'Bugi',
   },
   nsis: {
     oneClick: false,

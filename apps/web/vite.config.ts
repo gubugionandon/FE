@@ -17,6 +17,10 @@ export default defineConfig({
     port: 3000,
     host: true,
   },
+  optimizeDeps: {
+    force: true, // 의존성 캐시 강제 재빌드
+    include: ['zustand', 'react-hook-form', '@hookform/resolvers'],
+  },
   build: {
     outDir: 'dist',
     sourcemap: true,
