@@ -1,5 +1,7 @@
 import { ElectronAPI } from 'api';
 import { app, ipcMain } from 'electron';
+import { appendFile, mkdir } from 'fs/promises';
+import { join } from 'path';
 import './security-restrictions';
 import { restoreOrCreateWindow } from '/@/mainWindow';
 
@@ -16,6 +18,7 @@ function setupAPIHandlers() {
   ipcMain.removeAllListeners('api:hash');
   ipcMain.removeAllListeners('api:hash:batch');
   ipcMain.removeAllListeners('api:platform');
+  ipcMain.removeAllListeners('api:writeLog');
 
   // Health check handler
   ipcMain.handle('api:health', async () => {
@@ -72,6 +75,37 @@ function setupAPIHandlers() {
       electron: process.versions.electron,
     };
   });
+
+  // Write log file handler
+  ipcMain.handle(
+    'api:writeLog',
+    async (_event, data: string, filename?: string) => {
+      try {
+        const userDataPath = app.getPath('userData');
+        const logDir = join(userDataPath, 'logs');
+        await mkdir(logDir, { recursive: true });
+
+        const logFilename =
+          filename || `score_${new Date().toISOString().split('T')[0]}.log`;
+        const logPath = join(logDir, logFilename);
+
+        const timestamp = new Date().toISOString();
+        const logLine = `[${timestamp}] ${data}\n`;
+
+        await appendFile(logPath, logLine, 'utf-8');
+
+        // 개발 환경에서 경로 출력
+        if (import.meta.env.DEV) {
+          console.log(`📝 Log written to: ${logPath}`);
+        }
+
+        return { success: true, path: logPath };
+      } catch (error) {
+        console.error('Failed to write log:', error);
+        throw error;
+      }
+    },
+  );
 }
 
 /**
@@ -85,9 +119,15 @@ if (!isSingleInstance) {
 app.on('second-instance', restoreOrCreateWindow);
 
 /**
- * Disable Hardware Acceleration for more power-save
+ * Enable Hardware Acceleration for GPU support (required for WebGL)
  */
-app.disableHardwareAcceleration();
+// app.disableHardwareAcceleration(); // GPU 사용을 위해 주석 처리
+
+// GPU 가속 활성화를 위한 command line switches
+app.commandLine.appendSwitch('enable-gpu');
+app.commandLine.appendSwitch('enable-webgl');
+app.commandLine.appendSwitch('enable-accelerated-2d-canvas');
+app.commandLine.appendSwitch('ignore-gpu-blacklist'); // GPU 블랙리스트 무시
 
 /**
  * Shout down background process if all windows was closed

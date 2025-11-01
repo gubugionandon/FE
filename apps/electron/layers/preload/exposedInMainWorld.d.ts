@@ -41,5 +41,9 @@ interface Window {
     generateHash: (data: string) => Promise<HashResponse>;
     generateBatchHash: (dataList: string[]) => Promise<BatchHashResponse>;
     getPlatform: () => Promise<PlatformResponse>;
+    writeLog: (
+      data: string,
+      filename?: string,
+    ) => Promise<{ success: boolean; path: string }>;
   };
 }
