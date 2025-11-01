@@ -3,16 +3,21 @@ import Layout from '../layout/Layout';
 import CalibrationPage from '../pages/Calibration/CalibrationPage';
 import LoginPage from '../pages/Login/LoginPage';
 import MainPage from '../pages/Main/MainPage';
-import OnboardingPage from '../pages/Onboarding/OnboardingPage';
 import OnboardingCompletionPage from '../pages/Onboarding/OnboardingCompletionPage';
-import SignUpPage from '../pages/SignUp/SignUpPage';
+import OnboardingPage from '../pages/Onboarding/OnboardingPage';
 import EmailVerificationPage from '../pages/SignUp/EmailVerificationPage';
 import ResendVerificationPage from '../pages/SignUp/ResendVerificationPage';
+import SignUpPage from '../pages/SignUp/SignUpPage';
 
 export const router = createBrowserRouter([
   {
     element: <Layout />,
     path: '/',
+    children: [{ path: '', element: <OnboardingPage /> }],
+  },
+  {
+    element: <Layout />,
+    path: '/main',
     children: [{ path: '', element: <MainPage /> }],
   },
   {

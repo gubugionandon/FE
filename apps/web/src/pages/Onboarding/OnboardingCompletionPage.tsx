@@ -27,7 +27,7 @@ const OnboardingCompletionPage = () => {
             size="xl"
             className="w-[440px]"
             text="시작하기"
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/main')}
           />
         </div>
       </div>
