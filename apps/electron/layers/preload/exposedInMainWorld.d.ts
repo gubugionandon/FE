@@ -1,3 +1,27 @@
+// Electron API 타입 정의
+interface HealthResponse {
+  status: string;
+  timestamp: number;
+}
+
+interface VersionResponse {
+  version: string;
+  build: string;
+}
+
+interface HashResponse {
+  hash: string;
+}
+
+interface BatchHashResponse {
+  hashes: string[];
+}
+
+interface PlatformResponse {
+  platform: string;
+  arch: string;
+}
+
 interface Window {
   readonly yerba: { version: number };
   /**
@@ -12,10 +36,10 @@ interface Window {
    * window.electronAPI.getHealth()
    */
   readonly electronAPI: {
-    getHealth: () => Promise<unknown>;
-    getVersion: () => Promise<unknown>;
-    generateHash: (data: string) => Promise<unknown>;
-    generateBatchHash: (dataList: string[]) => Promise<unknown>;
-    getPlatform: () => Promise<unknown>;
+    getHealth: () => Promise<HealthResponse>;
+    getVersion: () => Promise<VersionResponse>;
+    generateHash: (data: string) => Promise<HashResponse>;
+    generateBatchHash: (dataList: string[]) => Promise<BatchHashResponse>;
+    getPlatform: () => Promise<PlatformResponse>;
   };
 }

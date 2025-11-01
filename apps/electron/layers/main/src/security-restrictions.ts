@@ -8,8 +8,20 @@ import { URL } from 'url';
  */
 const ALLOWED_ORIGINS_AND_PERMISSIONS = new Map<string, Set<string>>(
   import.meta.env.DEV && import.meta.env.VITE_DEV_SERVER_URL
-    ? [[new URL(import.meta.env.VITE_DEV_SERVER_URL).origin, new Set()]]
-    : [],
+    ? [
+        [
+          new URL(import.meta.env.VITE_DEV_SERVER_URL).origin,
+          new Set(['media']),
+        ],
+        // localhost:3000도 허용 (Electron 앱에서 사용)
+        ['http://localhost:3000', new Set(['media'])],
+        ['http://localhost:5173', new Set(['media'])],
+      ]
+    : [
+        // 프로덕션에서도 localhost 허용
+        ['http://localhost:3000', new Set(['media'])],
+        ['http://localhost:5173', new Set(['media'])],
+      ],
 );
 
 /**

@@ -64,6 +64,12 @@ const config = {
     gatekeeperAssess: false,
     entitlements: 'buildResources/entitlements.mac.plist',
     entitlementsInherit: 'buildResources/entitlements.mac.plist',
+    extendInfo: {
+      NSCameraUsageDescription:
+        '거부기린은 사용자의 자세를 실시간으로 분석하기 위해 카메라에 접근합니다.',
+      NSMicrophoneUsageDescription:
+        '거부기린은 사용자의 자세를 실시간으로 분석하기 위해 마이크에 접근합니다.',
+    },
   },
   win: {
     target: [
