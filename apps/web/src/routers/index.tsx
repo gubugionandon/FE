@@ -5,6 +5,8 @@ import LoginPage from '../pages/Login/LoginPage';
 import MainPage from '../pages/Main/MainPage';
 import OnboardingPage from '../pages/Onboarding/OnboardingPage';
 import SignUpPage from '../pages/SignUp/SignUpPage';
+import EmailVerificationPage from '../pages/SignUp/EmailVerificationPage';
+import ResendVerificationPage from '../pages/SignUp/ResendVerificationPage';
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +20,8 @@ export const router = createBrowserRouter([
     children: [
       { path: 'login', element: <LoginPage /> },
       { path: 'signup', element: <SignUpPage /> },
+      { path: 'verify', element: <EmailVerificationPage /> },
+      { path: 'resend', element: <ResendVerificationPage /> },
     ],
   },
   {

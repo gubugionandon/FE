@@ -2,8 +2,11 @@ import { useEnvironment, useHashMutation, useHealth, useVersion } from 'api';
 import { useState } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './routers';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 function App() {
+  const queryClient = new QueryClient();
+
   const [inputData, setInputData] = useState<string>('0.1');
 
   // React Query hooks
@@ -25,9 +28,9 @@ function App() {
   };
 
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
-    </>
+    </QueryClientProvider>
   );
 }
 

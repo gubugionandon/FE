@@ -9,7 +9,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          'bg-yellow-400 text-grey-1000 hover:bg-yellow-500 active:bg-yellow-600 disabled:bg-grey-200 disabled:text-grey-100 ',
+          'bg-yellow-400 text-grey-1000 hover:bg-yellow-500 active:bg-yellow-600 disabled:bg-yellow-100 disabled:text-grey-0 cursor-pointer',
       },
       size: {
         xs: 'h-[33px] px-3 text-caption-sm-medium',
